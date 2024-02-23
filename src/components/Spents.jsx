@@ -13,15 +13,17 @@ export function Spents({ spents }) {
 
     return (
         <>
-        <div className='flex flex-col py-1'>
+        <div className='flex flex-col py-1 h-5/6 overflow-scroll'>
             {isLoading ? <div>Cargando...</div> :
                     data.map((spent, index) => {
                         // Convertir la fecha a objeto Date
                         const date = new Date(spent.date);
+                        const utcDate = new Date(date.toISOString().split('T')[0]);
+
                         // Obtener los componentes de la fecha
-                        const day = date.getDate();
-                        const month = date.getMonth() + 1; // Los meses en JavaScript son 0-indexados, por lo que se agrega 1
-                        const year = date.getFullYear();
+                        const day = utcDate.getUTCDate();
+                        const month = utcDate.getUTCMonth() + 1; // Los meses en JavaScript son 0-indexados, por lo que se agrega 1
+                        const year = utcDate.getUTCFullYear();
                         // Construir la cadena de fecha en el formato dd/mm/yyyy
                         const formattedDate = `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
                         return (

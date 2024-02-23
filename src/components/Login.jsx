@@ -45,7 +45,7 @@ export function Login(){
     return (
         <>
             <div className='bg-black w-screen h-screen flex justify-center items-center'>
-                <div className="bg-white w-3/5 h-2/5 md:w-1/6 flex flex-col rounded-lg">
+                <div className="bg-white w-3/5 h-2/5 md:w-2/6 flex flex-col rounded-lg">
                     <div className='h-1/5  flex items-center rounded-t-lg'>
                         <h2 className='text-center w-full'>Bienvenido/a</h2>
                     </div>
