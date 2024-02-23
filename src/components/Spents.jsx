@@ -13,7 +13,7 @@ export function Spents({ spents }) {
 
     return (
         <>
-        <div className='flex flex-col py-1 h-5/6 overflow-scroll'>
+        <div className='flex flex-col py-1 h-5/6 overflow-scroll bg-white'>
             {isLoading ? <div>Cargando...</div> :
                     data.map((spent, index) => {
                         // Convertir la fecha a objeto Date
