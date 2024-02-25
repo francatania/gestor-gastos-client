@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Spents } from './Spents'
 import { Incomes } from './Incomes';
+import { Stats }  from './Stats'
 import {decodeToken} from 'react-jwt';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 export function Window(){
 
     const [spents, setSpents] = useState(null);
-    console.log(spents)
+    // console.log(spents)
     const [incomes, setIncomes] = useState([]);
     let [choice, setChoice] = useState('Spents');
     const navigate = useNavigate();
@@ -25,8 +26,8 @@ export function Window(){
     const todayDate = formatDate(todayDateOnly)
     const [selectedFromDate, setSelectedFromDate] = useState(todayDate);
     const [selectedToDate, setSelectedToDate] = useState(todayDate);
-    console.log(selectedFromDate)
-    console.log(selectedToDate)
+    // console.log(selectedFromDate)
+    // console.log(selectedToDate)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -108,6 +109,7 @@ export function Window(){
       
     const handleStatsButton = () =>{
         setChoice('Stats');
+        showIncomes();
       }
       
 
@@ -199,7 +201,7 @@ export function Window(){
 
         {choice == 'Spents' ? <Spents spents={spents}></Spents> :
         choice == 'Incomes' ? <Incomes incomes={incomes}></Incomes> :
-        choice == 'Stats' ? <div>Nada</div> : null }
+        choice == 'Stats' ? <Stats spents={spents} incomes={incomes}></Stats> : null}
       </section>
     </>
 }
