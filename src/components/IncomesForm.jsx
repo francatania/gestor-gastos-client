@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 
 
-export function SpentsForm(){
+export function IncomesForm(){
     const [categories, setCategories] = useState([]);
     const [selectedDate, setSelectedDate] = useState('');
     const [user, setUser] = useState('');
@@ -19,7 +19,7 @@ export function SpentsForm(){
     const showSwalSuccess = () => {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
-        title: '¡Gasto agreado!',
+        title: '¡Ingreso agreado!',
         icon: "success"
       }).then(()=>{
           window.location.href = '/home';
@@ -29,7 +29,7 @@ export function SpentsForm(){
     const showSwalError = () => {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
-        title: 'Hubo un error al registrar el gasto. Intente nuevamente.',
+        title: 'Hubo un error al registrar el ingreso. Intente nuevamente.',
         text: 'Recuerde que se debe completar todos los campos.',
         icon: "error"
       })
@@ -39,7 +39,7 @@ export function SpentsForm(){
         const fetchData = async () => {
             try {
 
-              const response = await fetch(`http://localhost:8080/api/spents-categories`, {
+              const response = await fetch(`http://localhost:8080/api/incomes-categories`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -75,7 +75,7 @@ export function SpentsForm(){
       }
 
       try {
-          const response = await fetch('http://localhost:8080/api/spents', {
+          const response = await fetch('http://localhost:8080/api/incomes', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
@@ -86,14 +86,14 @@ export function SpentsForm(){
           if (response.ok) {
               setTimeout(() => {
                 showSwalSuccess();
-                console.log('Gasto agregado exitosamente');
+                console.log('Ingreso agregado exitosamente');
                 setLoading(false);
               }, 1000);
               
           } else {
             setTimeout(() => {
               showSwalError()
-              console.error('Error al agregar el gasto');
+              console.error('Error al agregar el ingreso');
               setLoading(false);
             }, 1000);
               
@@ -121,7 +121,7 @@ export function SpentsForm(){
                   <Link className='hover:cursor-pointer' to={'/home'}> 
                     <h5 className='text-[0.8rem]'><i className="fa-solid fa-arrow-left"></i> Volver</h5>
                   </Link>
-                  <h2 className='text-[1.5rem]'>Formulario de gasto</h2>
+                  <h2 className='text-[1.5rem]'>Formulario de ingresos</h2>
                   
                 </div>
                 
@@ -191,7 +191,7 @@ export function SpentsForm(){
                             wrapperClass=""
                             />
                       </div>       :
-                            <input onClick={handleSubmit} type="submit" value='Agregar Gasto' className='text center w-full rounded-sm p-1 bg-green-400 hover:cursor-pointer hover:scale-105 duration-75' />
+                            <input onClick={handleSubmit} type="submit" value='Agregar Ingreso' className='text center w-full rounded-sm p-1 bg-green-400 hover:cursor-pointer hover:scale-105 duration-75' />
 
                       }
                     </div>
