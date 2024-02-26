@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 export function Window(){
 
     const [spents, setSpents] = useState(null);
-    // console.log(spents)
+    console.log(spents)
     const [incomes, setIncomes] = useState([]);
     let [choice, setChoice] = useState('Spents');
     const navigate = useNavigate();
@@ -24,10 +24,10 @@ export function Window(){
     const today = new Date();
     const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const todayDate = formatDate(todayDateOnly)
-    const [selectedFromDate, setSelectedFromDate] = useState(todayDate);
+    const [selectedFromDate, setSelectedFromDate] = useState('2024-01-01');
     const [selectedToDate, setSelectedToDate] = useState(todayDate);
-    // console.log(selectedFromDate)
-    // console.log(selectedToDate)
+    console.log(selectedFromDate)
+    console.log(selectedToDate)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,26 +37,16 @@ export function Window(){
             const userId = payload._id;
 
             if(choice == 'Spents'){
-              const response = await fetch(`http://localhost:8080/api/spents-range-date/${userId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                  'Authorization': `Bearer ${token}`,
-                  'Content-Type': 'application/json'
-                }
-              });
-        
-              if (!response.ok) {
-                throw new Error('Hubo un error al hacer el fetch');
-              }
-        
-              const result = await response.json();
-        
-              setSpents(result);
+              showSpents(userId, token);
             }
             
             if(choice == 'Incomes'){
-              showIncomes();
+              showIncomes(userId, token);
+            }
+
+            if(choice == 'Stats'){
+              showSpents(userId, token);
+              showIncomes(userId, token);
             }
 
           } catch (error) {
@@ -69,12 +59,30 @@ export function Window(){
       }, [selectedFromDate, selectedToDate, choice]);
 
 
-
+    const showSpents = async (userId, token) =>{
+        const response = await fetch(`http://localhost:8080/api/spents-range-date/${userId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+  
+        if (!response.ok) {
+          throw new Error('Hubo un error al hacer el fetch');
+        }
+  
+        const result = await response.json();
+  
+        setSpents(result);
+      }
+    
+      
     const showIncomes = async () =>{
-        try {
-          const token = localStorage.getItem('token');
-          const payload = decodeToken(token);
-          const userId = payload._id;
+      const token = localStorage.getItem('token');
+      const payload = decodeToken(token);
+      const userId = payload._id;
 
           const response = await fetch(`http://localhost:8080/api/incomes-range-date/${userId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
             method: 'GET',
@@ -92,11 +100,8 @@ export function Window(){
           const result = await response.json();
     
           setIncomes(result);
-        } catch (error) {
-          console.error('Error al obtener los datos', error);
-          navigate('/login');
+
         }
-      };
 
     const handleSpentsButton = () =>{
         setChoice('Spents');
@@ -104,12 +109,12 @@ export function Window(){
 
     const handleIncomesButton = () =>{
         setChoice('Incomes');
-        showIncomes();
       }
       
     const handleStatsButton = () =>{
         setChoice('Stats');
-        showIncomes();
+        setChoice('Spents');
+        setChoice('Stats');
       }
       
 
@@ -162,9 +167,9 @@ export function Window(){
 
         </article>
 
-        <article className='h-1/12 bg-[#DFBE99]'> 
+        <article className=' bg-[#DFBE99]'> 
                 <div className='flex  justify-around  w-full '>
-                    <div className='flex flex-col p-2 md:p-5 justify-around w-full b'>
+                    <div className='flex flex-col p-2  justify-around w-full b'>
                         <div className='w-full '>
                                 <label htmlFor="">Desde</label>
                             </div>
@@ -180,7 +185,7 @@ export function Window(){
                             </div>
                     </div>
 
-                    <div className='flex flex-col p-2 md:p-5 justify-around  w-full b'>
+                    <div className='flex flex-col p-2  justify-around  w-full b'>
                         <div className='w-full '>
                                 <label htmlFor="">Hasta</label>
                             </div>
