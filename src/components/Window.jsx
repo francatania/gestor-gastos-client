@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 export function Window(){
 
     const [spents, setSpents] = useState(null);
-    console.log(spents)
+    // console.log(spents)
     const [incomes, setIncomes] = useState([]);
     let [choice, setChoice] = useState('Spents');
     const navigate = useNavigate();
@@ -26,8 +26,8 @@ export function Window(){
     const todayDate = formatDate(todayDateOnly)
     const [selectedFromDate, setSelectedFromDate] = useState('2024-01-01');
     const [selectedToDate, setSelectedToDate] = useState(todayDate);
-    console.log(selectedFromDate)
-    console.log(selectedToDate)
+    // console.log(selectedFromDate)
+    // console.log(selectedToDate)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,8 +50,9 @@ export function Window(){
             }
 
           } catch (error) {
-            console.error('Error al obtener los datos', error);
             navigate('/login');
+            console.error('Error al obtener los datos', error);
+
           }
         };
       
@@ -70,6 +71,7 @@ export function Window(){
         });
   
         if (!response.ok) {
+          // navigate('/login');
           throw new Error('Hubo un error al hacer el fetch');
         }
   

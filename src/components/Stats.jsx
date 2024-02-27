@@ -2,14 +2,19 @@ import { useState, useEffect } from 'react';
 import { Chart as ChartJS, scales } from 'chart.js/auto';
 import {Bar, Doughnut, Line} from 'react-chartjs-2';
 import { Colors } from 'chart.js';
+import { SpentsStats } from './SpentsStats.jsx';
+import {IncomesStats} from './IncomesStats.jsx';
 
 
 
 export function Stats({ incomes, spents }) {
     const [isLoading, setLoading] = useState(true);
-    const [data, setData] = useState([]);
-    const [dataBarGraphic, setDataBarGraphic] = useState([])
-    const [graphChoice, setGraphChoice] = useState('bars');
+    const [spentsDonutData, setSpentsDonutData] = useState([]);
+    const [spentsBarData, setSpentsBarData] = useState([]);
+    const [incomesDonutData, setIncomesDonutData] = useState([]);
+    const [incomesBarData, setIncomesBarData] = useState([]);
+    const [graphChoice, setGraphChoice] = useState('donut');
+    const [dataChoice, setDataChoice] = useState('spents')
     const [isMobile, setIsMobile] = useState(false);
 
     ChartJS.register(Colors);
@@ -31,12 +36,36 @@ export function Stats({ incomes, spents }) {
                 amount: groupedData[category]
             }));
 
-            setData(dataArray);
+            setSpentsDonutData(dataArray);
             setLoading(false)
             
             
         }
     }, [spents]);
+
+    useEffect(() => {
+        if (incomes && incomes.list) {
+            const groupedData = incomes.list.reduce((acc, income) => {
+                if (acc[income.category]) {
+                    acc[income.category] += income.amount;
+                } else {
+                    acc[income.category] = income.amount;
+                }
+                return acc;
+            }, {});
+
+
+            const dataArray = Object.keys(groupedData).map(category => ({
+                category,
+                amount: groupedData[category]
+            }));
+
+            setIncomesDonutData(dataArray);
+            setLoading(false)
+            
+            
+        }
+    }, [incomes]);
 
     useEffect(() => {
         if (spents && spents.list) {
@@ -70,11 +99,64 @@ export function Stats({ incomes, spents }) {
                     }
                 });
     
-            setDataBarGraphic(dataArray);
+            setSpentsBarData(dataArray);
             setLoading(false)
             
         }
     }, [spents]);
+
+    useEffect(() => {
+        if (incomes && incomes.list) {
+            const groupedData = incomes.list.reduce((acc, income) => {
+                const date = new Date(income.date);
+                const year = date.getUTCFullYear();
+                const month = date.getUTCMonth() + 1;
+                const key = `${year}-${month}`;
+    
+                if (acc[key]) {
+                    acc[key] += income.amount;
+                } else {
+                    acc[key] = income.amount;
+                }
+    
+                return acc;
+            }, {});
+    
+            const dataArray = Object.keys(groupedData)
+                .map(key => ({
+                    date: key,
+                    amount: groupedData[key]
+                }))
+                .sort((a, b) => {
+                    const [aYear, aMonth] = a.date.split('-').map(Number);
+                    const [bYear, bMonth] = b.date.split('-').map(Number);
+                    if (aYear !== bYear) {
+                        return aYear - bYear;
+                    } else {
+                        return aMonth - bMonth;
+                    }
+                });
+    
+            setIncomesBarData(dataArray);
+            setLoading(false)
+            
+        }
+    }, [incomes]);
+
+    useEffect(() => {
+        const handleResize = () => {
+          const screenWidth = window.innerWidth;
+          setIsMobile(screenWidth < 1000);
+        };
+    
+        handleResize();
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []); 
 
     const textCenter = {
         id: 'textCenter',
@@ -108,176 +190,56 @@ export function Stats({ incomes, spents }) {
         }
     }
 
-    useEffect(() => {
-        const handleResize = () => {
-          const screenWidth = window.innerWidth;
-          setIsMobile(screenWidth < 1000);
-        };
-    
-        handleResize();
-    
-        window.addEventListener('resize', handleResize);
-    
-        return () => {
-          window.removeEventListener('resize', handleResize);
-        };
-      }, []); 
-      
+
+const handleGraph = (value) => {
+        setGraphChoice(value)
+    }  
+
+const handleChoice = (value) => {
+    setDataChoice(value);
+}    
    
 
     return (
         <>
-        <div className='flex flex-col py-1 h-[73.5%] overflow-scroll bg-white'>
+        <section className='flex flex-col py-1 h-[73.5%] md:h-4/6 overflow-scroll bg-white'>
+            <article className='flex justify-around md:justify-start'>
 
-            {isLoading ? <div>Cargando...</div> :
+                    <div>
+                        <select name="" id="" onChange={(e) => handleChoice(e.target.value)}>
+                            <option value="spents" >Gastos</option>
+                            <option value="incomes">Ingresos</option>
+                        </select>
+                    </div>
+                    {isMobile ? dataChoice == 'spents' ? 
+                                <div>
+                                    <select name="" id="" onChange={(e) => handleGraph(e.target.value)}>
+                                        <option value="bars" selected={graphChoice === 'bars'}>Gastos por Mes</option>
+                                        <option value="donut"selected={graphChoice === 'donut'}>Gastos por Categoría</option>
+                                    </select>
+                                </div>
+                    :      
+                    
+                                <div>
+                                    <select name="" id="" onChange={(e) => handleGraph(e.target.value)}>
+                                        <option value="bars" selected={graphChoice === 'bars'} >Ingresos por Mes</option>
+                                        <option value="donut" selected={graphChoice === 'donut'}>Ingresos por Categoría</option>
+                                    </select>
+                                </div>
+                    : null
+                            }
 
-            !isMobile ? 
-            <div className='flex flex-col md:flex-row justify-center align-middle h-full w-full'>
-                
-                <div className='w-full h-1/2 md:w-1/2 md:h-full'>
-                    <Doughnut
-                        data={{
-                            labels: data.map((i) => i.category),
-                            datasets: [
-                                {
-                                    label: "Monto",
-                                    data: data.map((i) => i.amount)
-                                }
-                                
-                            ]
-                        }}
-                        plugins={[textCenter]}
 
-                        options={{
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: {
-                                    beginAtZero: false,
-                                    display: false
-                                }
-                            },
-
-                            plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Gastos por Categoría'
-                                },
-                                colors: {
-                                    enabled: true
-                                  }
-                            }  
-                        }}
-                    />
-                </div>
-
-                <div className='w-full h-1/2 md:w-1/2 md:h-full flex justify-center align-middle'>
-                    <Bar
-                        data={{
-                            labels: dataBarGraphic.map((i) => i.date),
-                            datasets: [
-                                {
-                                    label: "Monto",
-                                    data: dataBarGraphic.map((i) => i.amount)
-                                } 
-                            ]
-                        }}
-                        
-                        options={{
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            },
-                        
-
-                              plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Gastos por Año'
-                                }
-                            }  
-                        }}
-        
-
-                    />
-                </div>
+            </article>
+            {dataChoice == 'spents' ? 
             
-            </div>
-            : graphChoice == 'donut' ?
-
-                <div  className={isMobile ? 'w-full h-full' : 'w-full h-1/2 md:w-1/2 md:h-full'}>
-            <Doughnut
-                data={{
-                    labels: data.map((i) => i.category),
-                    datasets: [
-                        {
-                            label: "Monto",
-                            data: data.map((i) => i.amount)
-                        }
-                        
-                    ]
-                }}
-                plugins={[textCenter]}
-
-                options={{
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            display: false
-                        }
-                    },
-
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Gastos por Categoría'
-                        },
-                        colors: {
-                            enabled: true
-                          }
-                    }  
-                }}
-            />
-                </div>
+            <SpentsStats data = {spentsDonutData} dataBarGraphic = {spentsBarData} textCenter={textCenter} graphChoice={graphChoice} isMobile={isMobile}/> 
+            
             :
-            
-                <div className='w-full h-full  flex justify-center align-middle'>
-            <Bar
-                data={{
-                    labels: dataBarGraphic.map((i) => i.date),
-                    datasets: [
-                        {
-                            label: "Monto",
-                            data: dataBarGraphic.map((i) => i.amount)
-                        } 
-                    ]
-                }}
-                
-                options={{
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                
 
-                      plugins: {
-                        title: {
-                            display: true,
-                            text: 'Gastos por Mes'
-                        }
-                    }  
-                }}
+            <IncomesStats data = {incomesDonutData} dataBarGraphic = {incomesBarData} textCenter={textCenter} graphChoice={graphChoice} isMobile={isMobile}/> }               
 
-
-            />
-                </div>
-        }
-        </div>
-
+        </section>
         </>
     );
 }
