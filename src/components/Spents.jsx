@@ -15,7 +15,7 @@ export function Spents({ spents }) {
 
     return (
         <>
-        <article className='flex flex-col py-1 h-4/6 overflow-scroll bg-white'>
+        <article className='flex flex-col py-1 h-4/6 overflow-scroll overflow-x-hidden bg-white'>
 
             {isLoading ? <div>Cargando...</div> :
                     data.map((spent, index) => {

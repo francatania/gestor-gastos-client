@@ -8,6 +8,7 @@ export function Home(){
       return (
         <>
         <div className='bg-black h-lvh w-full flex align-middle'>
+          
           <Window></Window>
         </div>
         </>

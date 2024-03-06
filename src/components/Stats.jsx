@@ -202,7 +202,7 @@ const handleChoice = (value) => {
 
     return (
         <>
-        <section className='flex flex-col py-1 h-[73.5%] md:h-4/6 overflow-scroll bg-white'>
+        <section className='flex flex-col py-1 h-[73.5%] md:h-4/6 overflow-scroll overflow-x-hidden bg-white'>
             <article className='flex justify-around md:justify-start'>
 
                     <div>

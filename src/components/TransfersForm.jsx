@@ -9,7 +9,7 @@ import { SelectedAccountContext } from '../App.jsx';
 
 
 
-export function IncomesForm(){
+export function TransfersForm(){
     const [categories, setCategories] = useState([]);
     const [selectedDate, setSelectedDate] = useState('');
     const [account, setAccount] = useState('');
@@ -23,7 +23,7 @@ export function IncomesForm(){
     const showSwalSuccess = () => {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
-        title: '¡Ingreso agreado!',
+        title: '¡Transferencia con éxito!',
         icon: "success"
       }).then(()=>{
           window.location.href = '/home';
@@ -33,8 +33,7 @@ export function IncomesForm(){
     const showSwalError = () => {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
-        title: 'Hubo un error al registrar el ingreso. Intente nuevamente.',
-        text: 'Recuerde que se debe completar todos los campos.',
+        title: 'Hubo un error al registrar la transferencia. Intente nuevamente.',
         icon: "error"
       })
     };

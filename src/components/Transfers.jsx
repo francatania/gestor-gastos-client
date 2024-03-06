@@ -1,23 +1,26 @@
 import { useState, useEffect } from 'react';
 
-export function Incomes({ incomes }) {
+export function Transfers({ spents }) {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
+
+
     useEffect(() => {
-        if (incomes && incomes.list) {
-            setData(incomes.list);
+        if (spents && spents.list) {
+            setData(spents.list);
             setLoading(false);
         }
-    }, [incomes]);
+    }, [spents]);
 
     return (
         <>
-        <div className='flex flex-col py-1 h-4/6 overflow-scroll overflow-x-hidden bg-white'>
+        <article className='flex flex-col py-1 h-4/6 overflow-scroll overflow-x-hidden bg-white'>
+
             {isLoading ? <div>Cargando...</div> :
-                    data.map((income, index) => {
+                    data.map((spent, index) => {
                         // Convertir la fecha a objeto Date
-                        const date = new Date(income.date);
+                        const date = new Date(spent.date);
                         const utcDate = new Date(date.toISOString().split('T')[0]);
 
                         // Obtener los componentes de la fecha
@@ -29,13 +32,13 @@ export function Incomes({ incomes }) {
                         return (
                             <div key={index} className='flex my-1 bg-[#FCE0C0] rounded-sm mx-0.5'>
                                 <div className='w-1/3'>{formattedDate}</div>
-                                <div className='w-1/3 text-center'>{income.description}</div>
-                                <div className='w-1/3 text-right px-1'>${income.amount}</div>
+                                <div className='w-1/3 text-center'>{spent.description}</div>
+                                <div className='w-1/3 text-right px-1'>${spent.amount}</div>
                             </div>
                         );
                     })
                 }
-        </div>
+        </article>
 
         </>
     );

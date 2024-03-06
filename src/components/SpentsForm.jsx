@@ -1,20 +1,23 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import {decodeToken} from 'react-jwt';
 import { ThreeDots } from 'react-loader-spinner'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { Link } from 'react-router-dom';
+import { SelectedAccountContext } from '../App.jsx';
 
 
 
 export function SpentsForm(){
     const [categories, setCategories] = useState([]);
     const [selectedDate, setSelectedDate] = useState('');
-    const [user, setUser] = useState('');
+    const [account, setAccount] = useState('');
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState(0);
     const [category, setCategory] = useState('');
     const [loading, setLoading] = useState(false);
+    const { selectedAccount } = useContext(SelectedAccountContext);
+
 
     const showSwalSuccess = () => {
       const MySwal = withReactContent(Swal);
@@ -34,6 +37,10 @@ export function SpentsForm(){
         icon: "error"
       })
     };
+
+    useEffect(()=>{
+      console.log("ABER DESDE SPENTFORM", selectedAccount)
+    }, [selectedAccount])
 
     useEffect(()=>{
         const fetchData = async () => {
@@ -67,7 +74,7 @@ export function SpentsForm(){
       setLoading(true);
       
       const formData = {
-        userId: user,
+        accountId: account,
         category: category,
         description: description,
         date: selectedDate,
@@ -106,8 +113,13 @@ export function SpentsForm(){
     useEffect(()=>{
       const token = localStorage.getItem('token');
       const payload = decodeToken(token);
-      setUser(payload._id);
-    }, [])
+      if(selectedAccount == ''){
+        setAccount(payload.accounts[0]);
+      }else{
+        setAccount(selectedAccount);
+      }
+      
+    }, [selectedAccount])
 
 
 
@@ -148,7 +160,7 @@ export function SpentsForm(){
                         <label htmlFor="">Categoría</label>
                         <div className=' shadow-sm' >
                             <select className='w-full rounded-sm p-1 shadow-sm' value={category} onChange={(e) => setCategory(e.target.value)}  name="" id="" >
-                                
+                                <option value="" disabled>Categorias</option>
                                 {categories.map((category, index) => (
                                 <option key={index} value={category.category}>{category.category}</option>
                             ))}
