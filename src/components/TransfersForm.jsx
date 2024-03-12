@@ -5,26 +5,28 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { Link } from 'react-router-dom';
 
+
 import { SelectedAccountContext } from '../App.jsx';
 
 
 
 export function TransfersForm(){
-    const [categories, setCategories] = useState([]);
     const [selectedDate, setSelectedDate] = useState('');
     const [account, setAccount] = useState('');
-    const [description, setDescription] = useState('');
+    const [toAccount, setToAccount] = useState('');
     const [amount, setAmount] = useState(0);
-    const [category, setCategory] = useState('');
     const [loading, setLoading] = useState(false);
-    const { selectedAccount } = useContext(SelectedAccountContext);
+    const [user, setUser] = useState('');
+    const [accounts, setAccounts] = useState([]);
+    const { arrayAccounts } = useContext(SelectedAccountContext);
 
 
     const showSwalSuccess = () => {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
         title: '¡Transferencia con éxito!',
-        icon: "success"
+        icon: "success",
+        confirmButtonColor: '#F4A615'
       }).then(()=>{
           window.location.href = '/home';
       });
@@ -33,54 +35,47 @@ export function TransfersForm(){
     const showSwalError = () => {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
-        title: 'Hubo un error al registrar la transferencia. Intente nuevamente.',
-        icon: "error"
+        title: 'Hubo un error al registrar la transferencia.',
+        icon: "error",
+        confirmButtonColor: '#F4A615'
       })
     };
 
     useEffect(()=>{
-        const fetchData = async () => {
-            try {
-
-              const response = await fetch(`http://localhost:8080/api/incomes-categories`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                },
-              });
-        
-              if (!response.ok) {
-                throw new Error('Hubo un error al hacer el fetch');
-              }
-        
-              const result = await response.json();
-        
-              setCategories(result.categories);
-            } catch (error) {
-              console.error('Error al obtener los datos', error);
-            }
-          };
-        
-          fetchData();
-    }, [])
+      const token = localStorage.getItem('token');
+      const payload = decodeToken(token);
+      const userId = payload._id;
+      setUser(userId);
+    },[])
 
     const handleSubmit = async (event)=>{
       event.preventDefault();
 
       setLoading(true);
+
+      const fromFilter = arrayAccounts.filter(i => i._id == account) 
+      const fromName = fromFilter.length > 0 ? fromFilter[0].accountName : '';
+      const toFilter = arrayAccounts.filter(i => i._id == toAccount) 
+      const toName = toFilter.length > 0 ? toFilter[0].accountName : '';
       
       const formData = {
+        userId:user,
         accountId: account,
-        category: category,
-        description: description,
+        fromName,
+        to: toAccount,
+        toName,
         date: selectedDate,
-        amount: amount
+        amount:amount
       }
 
       try {
-          const response = await fetch('http://localhost:8080/api/incomes', {
+          const token = localStorage.getItem('token');
+          console.log(formData)
+
+          const response = await fetch('http://localhost:8080/api/transfers', {
               method: 'POST',
               headers: {
+                  'Authorization': `Bearer ${token}`,
                   'Content-Type': 'application/json'
               },
               body: JSON.stringify(formData)
@@ -89,14 +84,14 @@ export function TransfersForm(){
           if (response.ok) {
               setTimeout(() => {
                 showSwalSuccess();
-                console.log('Ingreso agregado exitosamente');
+                console.log('Transferencia registrada.');
                 setLoading(false);
               }, 1000);
               
           } else {
             setTimeout(() => {
               showSwalError()
-              console.error('Error al agregar el ingreso');
+              console.error('Error al registrar la transferencia.');
               setLoading(false);
             }, 1000);
               
@@ -107,28 +102,23 @@ export function TransfersForm(){
     }
 
     useEffect(()=>{
-      const token = localStorage.getItem('token');
-      const payload = decodeToken(token);
-      if(selectedAccount == ''){
-        setAccount(payload.accounts[0]);
-      }else{
-        setAccount(selectedAccount);
-      }
+      if(arrayAccounts !=[]){
+        setAccounts(arrayAccounts)}
       
-    }, [selectedAccount])
+    }, [arrayAccounts])
 
 
 
     return <>
         <div className='bg-black h-lvh w-full flex align-middle'>
-          <div className='bg-white h-5/6 w-[95%] md:w-2/6 m-auto rounded-lg'>
+          <div className='bg-[#EAF2EF] h-5/6 w-[95%] md:w-3/6 m-auto rounded-lg'>
             <form action="POST" className='w-full h-full '>
 
                 <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full  '>
                   <Link className='hover:cursor-pointer' to={'/home'}> 
                     <h5 className='text-[0.8rem]'><i className="fa-solid fa-arrow-left"></i> Volver</h5>
                   </Link>
-                  <h2 className='text-[1.5rem]'>Formulario de ingresos</h2>
+                  <h2 className='text-[1.5rem]'>Formulario de transferencias</h2>
                   
                 </div>
                 
@@ -144,7 +134,7 @@ export function TransfersForm(){
                                 setSelectedDate(e.target.value)
                                 console.log(selectedDate)
                               }} 
-                              className='w-full rounded-sm p-1 shadow-sm'
+                              className='w-full rounded-sm p-1 shadow-sm bg-[#f5f8f7]'
                           />
                       </div>
                       
@@ -152,12 +142,26 @@ export function TransfersForm(){
                 </div>
 
                 <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full '>
-                        <label htmlFor="">Categoría</label>
+                        <label htmlFor="">Cuenta origen</label>
                         <div className=' shadow-sm' >
-                            <select className='w-full rounded-sm p-1 shadow-sm' value={category} onChange={(e) => setCategory(e.target.value)}  name="" id="" >
-                                <option value="" disabled>Categorias</option>
-                                {categories.map((category, index) => (
-                                <option key={index} value={category.category}>{category.category}</option>
+                            <select className='w-full rounded-sm p-1 shadow-sm bg-[#f5f8f7]' defaultValue={''} onChange={(e) => setAccount(e.target.value)}  name="" id="" >
+                                <option value="" disabled>Cuentas</option>
+                                {arrayAccounts.map((account, index) => (
+                                <option key={index} value={account._id}>{account.accountName}</option>
+                            ))}
+                            
+                            </select>     
+                        </div>  
+             
+                </div>
+
+                <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full '>
+                        <label htmlFor="">Cuenta Destino</label>
+                        <div className=' shadow-sm' >
+                            <select className='w-full rounded-sm p-1 shadow-sm bg-[#f5f8f7]' defaultValue={''} onChange={(e) => setToAccount(e.target.value)}  name="" id="" >
+                                <option value="" disabled>Cuentas</option>
+                                {arrayAccounts.map((account, index) => (
+                                <option key={index} value={account._id}>{account.accountName}</option>
                             ))}
                             
                             </select>     
@@ -165,18 +169,11 @@ export function TransfersForm(){
              
                 </div>
                 
-                <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full '>
-                        <label htmlFor="" >Descripción</label>
-                        <div className='shadow-sm'>
-                            <input className='w-full rounded-sm p-1 shadow-sm' type="text" onChange={(e) => setDescription(e.target.value)}/>   
-                        </div>
-           
-                </div>
 
                 <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full '>
                         <label htmlFor="">Monto</label>
                         <div className='shadow-sm' >
-                            <input className='w-full rounded-sm p-1 shadow-sm' type="number" onChange={(e) => setAmount(e.target.value)}/>
+                            <input className='w-full rounded-sm p-1 shadow-sm bg-[#f5f8f7]' type="number" onChange={(e) => setAmount(e.target.value)}/>
                         </div>
 
                 </div>
@@ -191,14 +188,14 @@ export function TransfersForm(){
                             visible={true}
                             height="80"
                             width="80"
-                            color="#4fa94d"
+                            color="#F4A615"
                             radius="9"
                             ariaLabel="three-dots-loading"
                             wrapperStyle={{}}
                             wrapperClass=""
                             />
                       </div>       :
-                            <input onClick={handleSubmit} type="submit" value='Agregar Ingreso' className='text center w-full rounded-sm p-1 bg-green-400 hover:cursor-pointer hover:scale-105 duration-75' />
+                            <input onClick={handleSubmit} type="submit" value='Agregar Transferencia' className='text center w-full rounded-sm p-1 bg-[#F4A615] text-[#071013] hover:cursor-pointer hover:scale-105 duration-75' />
 
                       }
                     </div>

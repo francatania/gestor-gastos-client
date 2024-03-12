@@ -12,6 +12,7 @@ import { Sidebar } from './SideBar.jsx';
 
 
 
+
 export function Window(){
 
     const [spents, setSpents] = useState(null);
@@ -34,6 +35,7 @@ export function Window(){
     const [accounts, setAccounts] = useState([]);
     const [userInfo, setUserInfo] = useState({});
     const { selectedAccount, setSelectedAccount } = useContext(SelectedAccountContext);
+    const [deleted, setDeleted] = useState(false);
 
     useEffect(()=>{
       const getUserInfo = async ()=>{
@@ -65,17 +67,16 @@ export function Window(){
       
     }, [])
 
+
     useEffect(() => {
       if (userInfo && userInfo.user && userInfo.user.accounts) {
         const userAccounts = userInfo.user.accounts;
-        console.log(userAccounts)
 
         const newObject = userAccounts.map(account => ({
           _id: account._id,
           accountName: account.accountName
         }));
 
-        console.log(newObject)
 
         setAccounts(newObject)
       }
@@ -95,10 +96,6 @@ export function Window(){
               accountId = selectedAccount;
             }
             
-            console.log(accountId)
-            console.log("holaa",selectedAccount)
-
-            // agregar el selectedAccount y pasarlo como parametro a las demas funciones en vez del accountId. Luego agregarlo en el array de dependencias
 
             if(choice == 'Spents'){
               showSpents(accountId, token);
@@ -125,12 +122,15 @@ export function Window(){
         };
       
         fetchData();
-      }, [selectedFromDate, selectedToDate, choice, selectedAccount]);  
+      }, [selectedFromDate, selectedToDate, choice, selectedAccount, deleted]);  
 
     const handleAccount = (value) => {
       setSelectedAccount(value)
     }  
   
+    const deletedFlag = ()=>{
+      setDeleted(!deleted);
+    }
 
     const showSpents = async (accountId, token) =>{
         const response = await fetch(`http://localhost:8080/api/spents-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
@@ -175,7 +175,7 @@ export function Window(){
 
         }
 
-      const showTransfers = async (accountId, token) =>{
+    const showTransfers = async (accountId, token) =>{
 
 
           const response = await fetch(`http://localhost:8080/api/transfers-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
@@ -224,30 +224,30 @@ export function Window(){
         
         <article className='h-1/6  '>
 
-          <Accounts accounts={accounts} handleAccount={handleAccount}/>
+          <Accounts accounts={accounts} handleAccount={handleAccount} flag={deletedFlag}/>
 
           <section className='h-1/2  rounded-t-lg text-center flex justify-center items-center'>
 
-            <article onClick={handleSpentsButton} className={choice == 'Spents' ? ' bg-[#DFBE99] w-1/3 flex justify-around rounded-tl-lg h-full   hover:cursor-pointer' : ' bg-[#9c7d58] hover:cursor-pointer rounded-tl-lg w-1/3 flex justify-around h-full border-r-1 ' } >
-              <div className='text-[1.2rem] md:text-[1.5rem] text-center flex items-center'>
+            <article onClick={handleSpentsButton} className={choice == 'Spents' ? ' bg-[#188C7C] w-1/3 flex justify-around rounded-tl-lg h-full   hover:cursor-pointer' : ' bg-[#136F63] hover:cursor-pointer rounded-tl-lg w-1/3 flex justify-around h-full border-r-1 ' } >
+              <div className='text-[1.2rem] md:text-[1.5rem] text-center text-white flex items-center'>
                 <h2 className="inline-block text-[1rem] md:text-[1.5rem]">Gastos</h2>
               </div>
             </article>
 
-            <article  className={choice == 'Incomes' ? ' bg-[#DFBE99] w-1/3 flex justify-around h-full   hover:cursor-pointer' : ' bg-[#9c7d58] w-1/3 flex justify-around h-full hover:cursor-pointer border-r-1  ' }>
-              <div onClick={handleIncomesButton} className='text-[1.2rem] md:text-[1.5rem] text-center flex items-center'>
+            <article  className={choice == 'Incomes' ? ' bg-[#188C7C] w-1/3 flex justify-around h-full   hover:cursor-pointer' : ' bg-[#136F63] w-1/3 flex justify-around h-full hover:cursor-pointer border-r-1  ' }>
+              <div onClick={handleIncomesButton} className='text-[1.2rem] md:text-[1.5rem] text-white text-center flex items-center'>
                 <h2 className="inline-block text-[1rem] md:text-[1.5rem]">Ingresos</h2>
               </div>
             </article>
 
-            <article onClick={handleTransfersButton} className={choice == 'Transfers' ? ' bg-[#DFBE99] w-1/3 flex justify-around  h-full   hover:cursor-pointer' : ' bg-[#9c7d58] hover:cursor-pointer w-1/3 flex justify-around h-full border-r-1  ' } >
-              <div className='text-[1.2rem] md:text-[1.5rem] text-center flex items-center'>
+            <article onClick={handleTransfersButton} className={choice == 'Transfers' ? ' bg-[#188C7C] w-1/3 flex justify-around  h-full   hover:cursor-pointer' : ' bg-[#136F63] hover:cursor-pointer w-1/3 flex justify-around h-full border-r-1  ' } >
+              <div className='text-[1.2rem] md:text-[1.5rem] text-center text-white flex items-center'>
                 <h2 className="inline-block text-[1rem] md:text-[1.5rem]">Transferencias</h2>
               </div>
             </article>
 
-            <article className={choice == 'Stats' ? ' bg-[#DFBE99] w-1/3 rounded-tr-lg flex justify-around h-full  hover:cursor-pointer' : ' bg-[#9c7d58] w-1/3 flex justify-around hover:cursor-pointer h-full border-r-1 rounded-tr-lg  ' }>
-              <div onClick={handleStatsButton} className='text-[1.2rem] md:text-[1.5rem] text-center flex items-center'>
+            <article className={choice == 'Stats' ? ' bg-[#188C7C] w-1/3 rounded-tr-lg flex justify-around h-full  hover:cursor-pointer' : ' bg-[#136F63] w-1/3 flex justify-around hover:cursor-pointer h-full border-r-1 rounded-tr-lg  ' }>
+              <div onClick={handleStatsButton} className='text-[1.2rem] md:text-[1.5rem] text-white text-center flex items-center'>
                 <h2 className="inline-block text-[1rem] md:text-[1.5rem]">Estadísticas</h2>
               </div>
             </article>
@@ -256,10 +256,10 @@ export function Window(){
 
         </article>
 
-        <article className='flex  bg-[#DFBE99]'> 
+        <article className='flex  bg-[#188C7C]'> 
                 <div className='flex  justify-around  w-2/3 '>
                     <div className='flex flex-col p-2 justify-start w-1/2 '>
-                        <div className='w-full '>
+                        <div className='w-full text-white '>
                                 <label htmlFor="">Desde</label>
                             </div>
                             <div className=' shadow-sm'>
@@ -275,7 +275,7 @@ export function Window(){
                     </div>
 
                     <div className='flex flex-col p-2 justify-around  w-1/2 b'>
-                        <div className='w-full '>
+                          <div className='w-full text-white'>
                                 <label htmlFor="">Hasta</label>
                             </div>
                             <div className=' shadow-sm'>
@@ -294,8 +294,9 @@ export function Window(){
                 <div className='w-1/3  flex justify-center items-center'>
                       {choice == 'Spents' ?                   
                       <div class="flex gap-3">
+                        
                           <Link to={'/spents-form'}>
-                            <button class="bg-blue-500   text-white font-bold py-2 px-4 rounded flex items-center hover:bg-blue-600 duration-75">
+                            <button class="bg-[#F4A615] text-white font-bold py-2 mt-6 px-4 rounded flex items-center hover:bg-[#dba033] duration-75">
                               <i class="fa-solid fa-plus"></i>
                                 
                             </button>
@@ -304,7 +305,7 @@ export function Window(){
                       choice == 'Incomes' ? 
                       <div class="flex gap-3">
                           <Link to={'/incomes-form'}>
-                            <button class="bg-blue-500   text-white font-bold py-2 px-4 rounded flex items-center hover:bg-blue-600 duration-75">
+                            <button class="bg-[#F4A615] text-white font-bold py-2 mt-6 px-4 rounded flex items-center hover:bg-[#dba033] duration-75">
                               <i class="fa-solid fa-plus"></i>
                                 
                             </button>
@@ -313,10 +314,13 @@ export function Window(){
                       </div>:
                       choice == 'Transfers' ? 
                       <div class="flex gap-3">
-                            <button class="bg-blue-500   text-white font-bold py-2 px-4 rounded flex items-center hover:bg-blue-600 duration-75">
+                        <Link to={'/transfers-form'}>
+                            <button class="bg-[#F4A615] text-white font-bold py-2 mt-6 px-4 rounded flex items-center hover:bg-[#dba033] duration-75">
                               <i class="fa-solid fa-plus"></i>
                                 
                             </button>
+                        </Link>
+
                         </div> : null }
                   
                   </div>
@@ -325,10 +329,10 @@ export function Window(){
         </article>
 
 
-        {choice == 'Spents' ? <Spents spents={spents}></Spents> :
-        choice == 'Incomes' ? <Incomes incomes={incomes}></Incomes> :
+        {choice == 'Spents' ? <Spents spents={spents} account={selectedAccount} flag={deletedFlag}></Spents> :
+        choice == 'Incomes' ? <Incomes incomes={incomes} account={selectedAccount} flag={deletedFlag}></Incomes> :
         choice == 'Stats' ? <Stats spents={spents} incomes={incomes}></Stats> : 
-        choice == 'Transfers' ? <Transfers spents={transfers}></Transfers> : null}
+        choice == 'Transfers' ? <Transfers transfers={transfers}></Transfers> : null}
       </section>
 
       </div>

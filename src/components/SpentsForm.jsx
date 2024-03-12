@@ -23,7 +23,8 @@ export function SpentsForm(){
       const MySwal = withReactContent(Swal);
       MySwal.fire({
         title: '¡Gasto agreado!',
-        icon: "success"
+        icon: "success",
+        confirmButtonColor: '#F4A615'
       }).then(()=>{
           window.location.href = '/home';
       });
@@ -32,9 +33,10 @@ export function SpentsForm(){
     const showSwalError = () => {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
-        title: 'Hubo un error al registrar el gasto. Intente nuevamente.',
+        title: 'Hubo un error al registrar el gasto.',
         text: 'Recuerde que se debe completar todos los campos.',
-        icon: "error"
+        icon: "error",
+        confirmButtonColor: '#F4A615'
       })
     };
 
@@ -126,7 +128,7 @@ export function SpentsForm(){
 
     return <>
         <div className='bg-black h-lvh w-full flex align-middle'>
-          <div className='bg-white h-5/6 w-[95%] md:w-2/6 m-auto rounded-lg'>
+          <div className='bg-[#EAF2EF] h-5/6 w-[95%] md:w-3/6 m-auto rounded-lg'>
             <form action="POST" className='w-full h-full '>
 
                 <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full  '>
@@ -149,7 +151,7 @@ export function SpentsForm(){
                                 setSelectedDate(e.target.value)
                                 console.log(selectedDate)
                               }} 
-                              className='w-full rounded-sm p-1 shadow-sm'
+                              className='w-full rounded-sm p-1 shadow-sm bg-[#f5f8f7]'
                           />
                       </div>
                       
@@ -159,7 +161,7 @@ export function SpentsForm(){
                 <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full '>
                         <label htmlFor="">Categoría</label>
                         <div className=' shadow-sm' >
-                            <select className='w-full rounded-sm p-1 shadow-sm' value={category} onChange={(e) => setCategory(e.target.value)}  name="" id="" >
+                            <select className='w-full rounded-sm p-1 shadow-sm bg-[#f5f8f7]' value={category} onChange={(e) => setCategory(e.target.value)}  name="" id="" >
                                 <option value="" disabled>Categorias</option>
                                 {categories.map((category, index) => (
                                 <option key={index} value={category.category}>{category.category}</option>
@@ -173,7 +175,7 @@ export function SpentsForm(){
                 <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full '>
                         <label htmlFor="" >Descripción</label>
                         <div className='shadow-sm'>
-                            <input className='w-full rounded-sm p-1 shadow-sm' type="text" onChange={(e) => setDescription(e.target.value)}/>   
+                            <input className='w-full rounded-sm p-1 shadow-sm bg-[#f5f8f7]' type="text" onChange={(e) => setDescription(e.target.value)}/>   
                         </div>
            
                 </div>
@@ -181,7 +183,7 @@ export function SpentsForm(){
                 <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full '>
                         <label htmlFor="">Monto</label>
                         <div className='shadow-sm' >
-                            <input className='w-full rounded-sm p-1 shadow-sm' type="number" onChange={(e) => setAmount(e.target.value)}/>
+                            <input className='w-full rounded-sm p-1 shadow-sm bg-[#f5f8f7]' type="number" onChange={(e) => setAmount(e.target.value)}/>
                         </div>
 
                 </div>
@@ -196,14 +198,14 @@ export function SpentsForm(){
                             visible={true}
                             height="80"
                             width="80"
-                            color="#4fa94d"
+                            color="#F4A615"
                             radius="9"
                             ariaLabel="three-dots-loading"
                             wrapperStyle={{}}
                             wrapperClass=""
                             />
                       </div>       :
-                            <input onClick={handleSubmit} type="submit" value='Agregar Gasto' className='text center w-full rounded-sm p-1 bg-green-400 hover:cursor-pointer hover:scale-105 duration-75' />
+                            <input onClick={handleSubmit} type="submit" value='Agregar Gasto' className='text center text-[#071013] w-full rounded-sm p-1 bg-[#F4A615]  hover:cursor-pointer hover:scale-105 duration-75' />
 
                       }
                     </div>

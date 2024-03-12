@@ -17,7 +17,7 @@ export function AccountsList(){
 
     return <>
     <div className='bg-black h-lvh w-full flex align-middle'>
-          <div className='bg-white h-5/6 w-[95%] md:w-2/6 m-auto rounded-lg'>
+          <div className='bg-[#EAF2EF] h-5/6 w-[95%] md:w-3/6 m-auto rounded-lg'>
             <form action="POST" className='w-full h-full '>
 
                 <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full  '>
@@ -26,7 +26,11 @@ export function AccountsList(){
                   </Link>
                   <div className="flex justify-between">
                     <h2 className='text-[1.5rem]'>Mis Cuentas</h2>
-                    <Link to={'/accounts-form'}><i className="fa-solid fa-plus rounded-full w-1/3 h-3/3 flex items-center justify-center"></i></Link>
+                    <Link to={'/accounts-form'}>                            
+                      <button class="bg-[#F4A615] text-white font-bold py-2 px-4 rounded flex items-center hover:bg-[#dba033] duration-75">
+                        <i class="fa-solid fa-plus"></i>      
+                      </button>
+                    </Link>
 
                   </div>
                   

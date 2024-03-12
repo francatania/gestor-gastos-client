@@ -202,18 +202,18 @@ const handleChoice = (value) => {
 
     return (
         <>
-        <section className='flex flex-col py-1 h-[73.5%] md:h-4/6 overflow-scroll overflow-x-hidden bg-white'>
+        <section className='flex flex-col py-1 h-[73.5%] md:h-4/6 overflow-scroll overflow-x-hidden bg-[#EAF2EF]'>
             <article className='flex justify-around md:justify-start'>
 
                     <div>
-                        <select name="" id="" onChange={(e) => handleChoice(e.target.value)}>
+                        <select className='bg-[#EAF2EF]' name="" id="" onChange={(e) => handleChoice(e.target.value)}>
                             <option value="spents" >Gastos</option>
                             <option value="incomes">Ingresos</option>
                         </select>
                     </div>
                     {isMobile ? dataChoice == 'spents' ? 
                                 <div>
-                                    <select name="" id="" onChange={(e) => handleGraph(e.target.value)}>
+                                    <select className='bg-[#EAF2EF]' name="" id="" onChange={(e) => handleGraph(e.target.value)}>
                                         <option value="bars" selected={graphChoice === 'bars'}>Gastos por Mes</option>
                                         <option value="donut"selected={graphChoice === 'donut'}>Gastos por Categoría</option>
                                     </select>
@@ -221,7 +221,7 @@ const handleChoice = (value) => {
                     :      
                     
                                 <div>
-                                    <select name="" id="" onChange={(e) => handleGraph(e.target.value)}>
+                                    <select className='bg-[#EAF2EF]' name="" id="" onChange={(e) => handleGraph(e.target.value)}>
                                         <option value="bars" selected={graphChoice === 'bars'} >Ingresos por Mes</option>
                                         <option value="donut" selected={graphChoice === 'donut'}>Ingresos por Categoría</option>
                                     </select>

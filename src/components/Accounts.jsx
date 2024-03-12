@@ -2,12 +2,13 @@ import { useState, useEffect, useContext } from "react"
 import { SelectedAccountContext } from '../App.jsx';
 
 
-export function Accounts({accounts, handleAccount}){
+export function Accounts({accounts, handleAccount, flag}){
     const { selectedAccount,arrayAccounts, setArrayAccounts } = useContext(SelectedAccountContext);
     const [totalSpents, setTotalSpents] = useState(0)
     const [totalIncomes, setTotalIncomes] = useState(0)
     const [totalOutgoingTransfers, setTotalOutgoingTransfers] = useState(0);
     const [totalIncomingTransfers, setTotalIncomingTransfers] = useState(0);
+    const [total, setTotal] = useState(0);
 
 
     useEffect(()=>{
@@ -54,7 +55,7 @@ export function Accounts({accounts, handleAccount}){
             }, 0);
 
             const totalAmountOutTransfers = result.transfers ? result.transfers.reduce((accumulator, transfer) => {
-                if (transfer.accountId === selectedAccount) {
+                if (transfer.accountId == id) {
                     return accumulator + transfer.amount;
                 } else {
                     return accumulator;
@@ -62,7 +63,7 @@ export function Accounts({accounts, handleAccount}){
             }, 0) : 0;
             
             const totalAmountInTransfers = result.transfers ? result.transfers.reduce((accumulator, transfer) => {
-                if (transfer.accountId !== selectedAccount) {
+                if (transfer.accountId != id) {
                     return accumulator + transfer.amount;
                 } else {
                     return accumulator;
@@ -73,12 +74,16 @@ export function Accounts({accounts, handleAccount}){
             setTotalIncomes(totalAmountIncomes)
             setTotalOutgoingTransfers(totalAmountOutTransfers);
             setTotalIncomingTransfers(totalAmountInTransfers);
-
-
+            console.log(arrayAccounts)
         }
 
         fetchData();
-    }, [selectedAccount, arrayAccounts])
+    }, [selectedAccount, arrayAccounts, flag])
+
+    useEffect(()=>{
+        const calc = totalIncomes - totalSpents + totalIncomingTransfers - totalOutgoingTransfers
+        setTotal(calc); 
+    }, [selectedAccount, arrayAccounts, flag, totalSpents, totalIncomes, totalOutgoingTransfers, totalIncomingTransfers])
 
     useEffect(()=>{console.log(totalSpents, "TOTAL DE GASTOS", totalIncomes, "TOTAL INCOMES", totalIncomingTransfers,"total INCOMING" , totalOutgoingTransfers, "total OUTGOING")}, [totalSpents, totalIncomes, totalOutgoingTransfers, totalIncomingTransfers])
 
@@ -94,7 +99,7 @@ export function Accounts({accounts, handleAccount}){
                     </option>
                     ))}
               </select>
-              <h3 className='text-xl'>${totalIncomes - totalSpents + totalIncomingTransfers - totalOutgoingTransfers}</h3>
+              <h3 className='text-xl'>${total}</h3>
             </div>
             <div className='col-span-1'></div>
         </section>

@@ -24,7 +24,8 @@ export function AccountsForm(){
       const MySwal = withReactContent(Swal);
       MySwal.fire({
         title: '¡Cuenta creada!',
-        icon: "success"
+        icon: "success",
+        confirmButtonColor: '#F4A615'
       }).then(()=>{
           window.location.href = '/home';
       });
@@ -34,7 +35,8 @@ export function AccountsForm(){
       const MySwal = withReactContent(Swal);
       MySwal.fire({
         title: 'Hubo un error al crear la cuenta.',
-        icon: "error"
+        icon: "error",
+        confirmButtonColor: '#F4A615'
       })
     };
 
@@ -86,7 +88,7 @@ export function AccountsForm(){
 
     return <>
         <div className='bg-black h-lvh w-full flex align-middle'>
-          <div className='bg-white h-5/6 w-[95%] md:w-2/6 m-auto rounded-lg'>
+          <div className='bg-[#EAF2EF] h-5/6 w-[95%] md:w-3/6 m-auto rounded-lg'>
             <form action="POST" className='w-full h-full '>
 
                 <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full  '>
@@ -100,7 +102,7 @@ export function AccountsForm(){
                 <div className='flex flex-col p-2 md:p-5 justify-start gap-4 h-4/6 w-full '>
                         <label htmlFor="" >Nombre de Cuenta</label>
                         <div className='shadow-sm'>
-                            <input className='w-full rounded-sm p-1 shadow-sm' type="text" onChange={(e) => setName(e.target.value)}/>   
+                            <input className='w-full rounded-sm p-1 shadow-sm bg-[#f5f8f7]' type="text" onChange={(e) => setName(e.target.value)}/>   
                         </div>
            
                 </div>
@@ -115,14 +117,14 @@ export function AccountsForm(){
                             visible={true}
                             height="80"
                             width="80"
-                            color="#4fa94d"
+                            color="#F4A615"
                             radius="9"
                             ariaLabel="three-dots-loading"
                             wrapperStyle={{}}
                             wrapperClass=""
                             />
                       </div>       :
-                            <input onClick={handleSubmit} type="submit" value='Crear Cuenta' className='text center w-full rounded-sm p-1 bg-green-400 hover:cursor-pointer hover:scale-105 duration-75' />
+                            <input onClick={handleSubmit} type="submit" value='Crear Cuenta' className='text center text-[#071013] w-full rounded-sm p-1 bg-[#F4A615] hover:cursor-pointer hover:scale-105 duration-75' />
 
                       }
                     </div>
