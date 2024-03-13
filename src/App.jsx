@@ -30,6 +30,8 @@ export function App() {
     <SelectedAccountContext.Provider value={{selectedAccount, setSelectedAccount, arrayAccounts, setArrayAccounts}}>
           <BrowserRouter>
             <Routes>
+              <Route path="/" element={<Navigate to="/login" />} />
+              <Route path="" element={<Navigate to="/login" />} />
               <Route path='/login' element={<Login/>}></Route>
               <Route path='/register' element={<Register/>}></Route>
               <Route path='/home' element={<Home/>}></Route>
@@ -38,8 +40,6 @@ export function App() {
               <Route path='/transfers-form' element={<TransfersForm/>}></Route>
               <Route path='/accounts' element={<AccountsList/>}></Route>
               <Route path='/accounts-form' element={<AccountsForm/>}></Route>
-              <Route path="/" element={<Navigate to="/login" />} />
-              <Route path="" element={<Navigate to="/login" />} />
 
             </Routes>
           </BrowserRouter>
