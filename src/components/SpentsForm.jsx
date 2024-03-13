@@ -48,7 +48,7 @@ export function SpentsForm(){
         const fetchData = async () => {
             try {
 
-              const response = await fetch(`http://localhost:8080/api/spents-categories`, {
+              const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/spents-categories`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {

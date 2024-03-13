@@ -32,7 +32,7 @@ export function Accounts({accounts, handleAccount, flag}){
         console.log('EL ID', id)
 
         const fetchData = async () =>{
-            const response = await fetch(`http://localhost:8080/api/accounts/${id}`, {
+            const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/accounts/${id}`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {

@@ -43,7 +43,7 @@ export function Window(){
         const payload = decodeToken(token);
         const userId = payload._id;
 
-        const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+        const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/users/${userId}`, {
           method: 'GET',
           credentials: 'include',
           headers: {
@@ -133,7 +133,7 @@ export function Window(){
     }
 
     const showSpents = async (accountId, token) =>{
-        const response = await fetch(`http://localhost:8080/api/spents-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
+        const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/spents-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
           method: 'GET',
           credentials: 'include',
           headers: {
@@ -156,7 +156,7 @@ export function Window(){
     const showIncomes = async (accountId, token) =>{
 
 
-          const response = await fetch(`http://localhost:8080/api/incomes-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
+          const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/incomes-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -178,7 +178,7 @@ export function Window(){
     const showTransfers = async (accountId, token) =>{
 
 
-          const response = await fetch(`http://localhost:8080/api/transfers-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
+          const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/transfers-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
             method: 'GET',
             credentials: 'include',
             headers: {

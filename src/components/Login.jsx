@@ -17,7 +17,7 @@ export function Login() {
         setLoading(true);
         try {
             const formData = { email, password };
-            const response = await fetch('http://localhost:8080/api/auth/login', {
+            const response = await fetch('https://gestor-gastos-backend.onrender.com:10000/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -49,7 +49,7 @@ export function Spents({ spents, account, flag }) {
 
     const handleDelete = async (id)=>{
         try {
-            const response = await fetch(`http://localhost:8080/api/spents/${id}?account=${selectedAccount}`,{
+            const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/spents/${id}?account=${selectedAccount}`,{
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

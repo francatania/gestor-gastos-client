@@ -45,7 +45,7 @@ export function IncomesForm(){
         const fetchData = async () => {
             try {
 
-              const response = await fetch(`http://localhost:8080/api/incomes-categories`, {
+              const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/incomes-categories`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -81,7 +81,7 @@ export function IncomesForm(){
       }
 
       try {
-          const response = await fetch('http://localhost:8080/api/incomes', {
+          const response = await fetch('https://gestor-gastos-backend.onrender.com:10000/api/incomes', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
