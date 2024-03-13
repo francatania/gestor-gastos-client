@@ -164,7 +164,6 @@ export function Stats({ incomes, spents }) {
             const {ctx, data, chartArea } = chart;
 
             const list = data.datasets[0].data
-            // console.log("hola",list)
             const suma = Object.values(list).reduce((acc, currentValue) => acc + currentValue, 0);
 
             console.log(suma)
@@ -173,11 +172,11 @@ export function Stats({ incomes, spents }) {
 
             const screenWidth = window.innerWidth;
             if (screenWidth < 768) {
-                ctx.font = '15px sans-serif';
+                ctx.font = '20px sans-serif';
             } else if (screenWidth < 1024) {
-                ctx.font = '20px sans-serif';
+                ctx.font = '25px sans-serif';
             } else {
-                ctx.font = '20px sans-serif';
+                ctx.font = '30px sans-serif';
             }
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';

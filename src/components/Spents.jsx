@@ -3,6 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import {decodeToken} from 'react-jwt';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { Oval } from 'react-loader-spinner';
+
 
 
 export function Spents({ spents, account, flag }) {
@@ -71,7 +73,18 @@ export function Spents({ spents, account, flag }) {
         <>
         <article className='flex flex-col py-1 h-4/6 overflow-scroll overflow-x-hidden bg-[#EAF2EF]'>
 
-            {isLoading ? <div>Cargando...</div> :
+            {isLoading ? <div className='h-full flex justify-center items-center'>
+                <Oval
+                    visible={true}
+                    height="80"
+                    width="80"
+                    color="#188C7C"
+                    ariaLabel="oval-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    />
+
+            </div> :
                     data.map((spent, index) => {
                         const date = new Date(spent.date);
                         const utcDate = new Date(date.toISOString().split('T')[0]);
@@ -82,10 +95,10 @@ export function Spents({ spents, account, flag }) {
                         const formattedDate = `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
                         return (
                             <div key={index} className='flex my-1 ml-2 bg-[#c8e6db] rounded-sm mx-0.5'>
-                                <div className='w-[25%] text-start'>{formattedDate}</div>
-                                <div className='w-[50%] text-center'>{spent.description}</div>
-                                <div className='w-[12.5%] text-center px-1'>${spent.amount}</div>
-                                <div className='w-[12.5%] text-end px-1'><i onClick={()=>showSwalConfirmation(spent._id)} className="fa-solid fa-trash hover:cursor-pointer hover:text-red-500 transition all "></i></div>
+                                <div className='w-[25%] text-start text-[0.9rem] sm:text-[1rem]'>{formattedDate}</div>
+                                <div className='w-[50%] text-center text-[0.9rem] sm:text-[1rem]'>{spent.description}</div>
+                                <div className='w-[12.5%] text-center px-1 text-[0.9rem] sm:text-[1rem]'>${spent.amount}</div>
+                                <div className='w-[12.5%] text-end px-1 text-[0.9rem] sm:text-[1rem]'><i onClick={()=>showSwalConfirmation(spent._id)} className="fa-solid fa-trash hover:cursor-pointer hover:text-red-500 transition all "></i></div>
                             </div>
                         );
                     })

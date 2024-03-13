@@ -122,6 +122,15 @@ export function Register(){
                         </div>
                     </div>
                 </div>
+                <section className='flex flex-col justify-center items-center w-full fixed bottom-0 left-0 right-0' >
+                    <div className='flex text-white text-sm cursor-pointer py-3 mb-2 gap-2' > 
+                    <h3>Desarrollado por Franco Catania</h3>
+                    <div className='flex justify-center items-center gap-2'>
+                        <Link to={'https://www.linkedin.com/in/franco-catania-6758691a3/'} target="_blank"><i className="fa-brands fa-linkedin"></i></Link>
+                    </div>
+
+                    </div>
+                </section>
             </div>
         </>
     )

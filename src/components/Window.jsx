@@ -242,13 +242,13 @@ export function Window(){
 
             <article onClick={handleTransfersButton} className={choice == 'Transfers' ? ' bg-[#188C7C] w-1/3 flex justify-around  h-full   hover:cursor-pointer' : ' bg-[#136F63] hover:cursor-pointer w-1/3 flex justify-around h-full border-r-1  ' } >
               <div className='text-[1.2rem] md:text-[1.5rem] text-center text-white flex items-center'>
-                <h2 className="inline-block text-[1rem] md:text-[1.5rem]">Transferencias</h2>
+                <h2 className="inline-block text-[1rem] md:text-[1.5rem]"><i class="fa-solid fa-right-left"></i></h2>
               </div>
             </article>
 
             <article className={choice == 'Stats' ? ' bg-[#188C7C] w-1/3 rounded-tr-lg flex justify-around h-full  hover:cursor-pointer' : ' bg-[#136F63] w-1/3 flex justify-around hover:cursor-pointer h-full border-r-1 rounded-tr-lg  ' }>
               <div onClick={handleStatsButton} className='text-[1.2rem] md:text-[1.5rem] text-white text-center flex items-center'>
-                <h2 className="inline-block text-[1rem] md:text-[1.5rem]">Estadísticas</h2>
+                <h2 className="inline-block text-[1rem] md:text-[1.5rem]"><i class="fa-solid fa-chart-simple"></i></h2>
               </div>
             </article>
 
@@ -260,7 +260,7 @@ export function Window(){
                 <div className='flex  justify-around  w-2/3 '>
                     <div className='flex flex-col p-2 justify-start w-1/2 '>
                         <div className='w-full text-white '>
-                                <label htmlFor="">Desde</label>
+                                <label className='text-[0.8rem] sm:text-[1rem]' htmlFor="">Desde</label>
                             </div>
                             <div className=' shadow-sm'>
                                 <input  
@@ -269,14 +269,14 @@ export function Window(){
                                     onChange={(e) => {
                                         setSelectedFromDate(e.target.value)
                                     }} 
-                                    className='w-full rounded-sm p-1 shadow-sm'
+                                    className='text-[0.7rem] sm:text-[1rem] w-full rounded-sm p-1 shadow-sm'
                                 />
                             </div>
                     </div>
 
                     <div className='flex flex-col p-2 justify-around  w-1/2 b'>
                           <div className='w-full text-white'>
-                                <label htmlFor="">Hasta</label>
+                                <label className='text-[0.8rem] sm:text-[1rem]' htmlFor="">Hasta</label>
                             </div>
                             <div className=' shadow-sm'>
                                 <input  
@@ -285,7 +285,7 @@ export function Window(){
                                     onChange={(e) => {
                                         setSelectedToDate(e.target.value)
                                     }} 
-                                    className='w-full rounded-sm p-1 shadow-sm'
+                                    className='text-[0.7rem] sm:text-[1rem] w-full rounded-sm p-1 shadow-sm'
                                 />
                             </div>
                     </div>
