@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Accounts } from './Accounts.jsx';
 import { SelectedAccountContext } from '../App.jsx';
-import { Sidebar } from './SideBar.jsx';
+import { Sidebar } from './Sidebar.jsx';
 
 
 
