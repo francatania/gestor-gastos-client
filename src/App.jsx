@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Home } from './components/Home.jsx'
 import { Login } from './components/Login.jsx'
 import { Register } from './components/Register.jsx';
@@ -19,12 +19,12 @@ export function App() {
   const [ arrayAccounts, setArrayAccounts ] = useState([]);
   
 
-  useEffect(() => {
-      const pathname = window.location.pathname;
-      if (pathname === '/' || pathname === '') {
-        window.location.href = '/login';
-      }
-  }, []);
+  // useEffect(() => {
+  //     const pathname = window.location.pathname;
+  //     if (pathname === '/' || pathname === '') {
+  //       return <Navigate to="/login" />;
+  //     }
+  // }, []);
 
   return (
     <SelectedAccountContext.Provider value={{selectedAccount, setSelectedAccount, arrayAccounts, setArrayAccounts}}>
@@ -38,6 +38,8 @@ export function App() {
               <Route path='/transfers-form' element={<TransfersForm/>}></Route>
               <Route path='/accounts' element={<AccountsList/>}></Route>
               <Route path='/accounts-form' element={<AccountsForm/>}></Route>
+              <Route path="/" element={<Navigate to="/login" />} />
+              <Route path="" element={<Navigate to="/login" />} />
 
             </Routes>
           </BrowserRouter>
