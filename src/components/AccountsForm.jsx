@@ -56,7 +56,7 @@ export function AccountsForm(){
         const userId = payload._id;
   
         try {
-            const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/accounts/${userId}`, {
+            const response = await fetch(`https://gestor-gastos-backend.onrender.com/api/accounts/${userId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

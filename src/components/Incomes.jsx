@@ -47,7 +47,7 @@ export function Incomes({ incomes,account, flag }) {
 
     const handleDelete = async (id)=>{
         try {
-            const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/incomes/${id}?account=${selectedAccount}`,{
+            const response = await fetch(`https://gestor-gastos-backend.onrender.com/api/incomes/${id}?account=${selectedAccount}`,{
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

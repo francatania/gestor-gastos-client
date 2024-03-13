@@ -72,7 +72,7 @@ export function TransfersForm(){
           const token = localStorage.getItem('token');
           console.log(formData)
 
-          const response = await fetch('https://gestor-gastos-backend.onrender.com:10000/api/transfers', {
+          const response = await fetch('https://gestor-gastos-backend.onrender.com/api/transfers', {
               method: 'POST',
               headers: {
                   'Authorization': `Bearer ${token}`,

@@ -40,10 +40,13 @@ export function Window(){
     useEffect(()=>{
       const getUserInfo = async ()=>{
         const token = localStorage.getItem('token');
+        console.log(token);
         const payload = decodeToken(token);
         const userId = payload._id;
+        console.log(payload)
+        console.log(userId)
 
-        const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/users/${userId}`, {
+        const response = await fetch(`https://gestor-gastos-backend.onrender.com/api/users/${userId}`, {
           method: 'GET',
           credentials: 'include',
           headers: {
@@ -133,7 +136,7 @@ export function Window(){
     }
 
     const showSpents = async (accountId, token) =>{
-        const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/spents-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
+        const response = await fetch(`https://gestor-gastos-backend.onrender.com/api/spents-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
           method: 'GET',
           credentials: 'include',
           headers: {
@@ -156,7 +159,7 @@ export function Window(){
     const showIncomes = async (accountId, token) =>{
 
 
-          const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/incomes-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
+          const response = await fetch(`https://gestor-gastos-backend.onrender.com/api/incomes-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -178,7 +181,7 @@ export function Window(){
     const showTransfers = async (accountId, token) =>{
 
 
-          const response = await fetch(`https://gestor-gastos-backend.onrender.com:10000/api/transfers-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
+          const response = await fetch(`https://gestor-gastos-backend.onrender.com/api/transfers-range-date/${accountId}?startDate=${selectedFromDate}&endDate=${selectedToDate}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
