@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import { SelectedAccountContext } from '../App.jsx';
+import { Oval } from 'react-loader-spinner';
 
 
 export function Accounts({accounts, handleAccount, flag}){
@@ -9,6 +10,7 @@ export function Accounts({accounts, handleAccount, flag}){
     const [totalOutgoingTransfers, setTotalOutgoingTransfers] = useState(0);
     const [totalIncomingTransfers, setTotalIncomingTransfers] = useState(0);
     const [total, setTotal] = useState(0);
+    const [isLoading, setIsloading] = useState(true);
 
 
     useEffect(()=>{
@@ -81,8 +83,13 @@ export function Accounts({accounts, handleAccount, flag}){
     }, [selectedAccount, arrayAccounts, flag])
 
     useEffect(()=>{
-        const calc = totalIncomes - totalSpents + totalIncomingTransfers - totalOutgoingTransfers
-        setTotal(calc); 
+        setIsloading(true);
+        if(totalIncomes != 0 || totalSpents != 0 || totalIncomingTransfers != 0 || totalOutgoingTransfers != 0){
+            const calc = totalIncomes - totalSpents + totalIncomingTransfers - totalOutgoingTransfers
+            setTotal(calc); 
+            setIsloading(false)
+        }
+
     }, [selectedAccount, arrayAccounts, flag, totalSpents, totalIncomes, totalOutgoingTransfers, totalIncomingTransfers])
 
     useEffect(()=>{console.log(totalSpents, "TOTAL DE GASTOS", totalIncomes, "TOTAL INCOMES", totalIncomingTransfers,"total INCOMING" , totalOutgoingTransfers, "total OUTGOING")}, [totalSpents, totalIncomes, totalOutgoingTransfers, totalIncomingTransfers])
@@ -99,7 +106,22 @@ export function Accounts({accounts, handleAccount, flag}){
                     </option>
                     ))}
               </select>
-              <h3 className='text-xl'>${total}</h3>
+              {isLoading ? 
+              <div className='h-full flex justify-center items-center'>
+              <Oval
+                  visible={true}
+                  height="20"
+                  width="20"
+                  color="#188C7C"
+                  ariaLabel="oval-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  />
+
+          </div> :
+                <h3 className='text-xl'>${total}</h3>
+          }
+              {/* <h3 className='text-xl'>${total}</h3> */}
             </div>
             <div className='col-span-1'></div>
         </section>
