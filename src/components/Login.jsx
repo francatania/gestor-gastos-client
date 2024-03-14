@@ -34,10 +34,8 @@ export function Login() {
                     localStorage.setItem('token', token);
                     toast.success(`Bienvenido/a, ${name}`)
                 }, 500)
-                setTimeout(()=>{
-                    setLoading(false);
-                    navigate('/home');
-                }, 2500)
+                setLoading(false);
+                navigate('/home');
                 
             } else {
                 setTimeout(()=>{

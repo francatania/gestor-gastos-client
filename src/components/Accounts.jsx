@@ -18,9 +18,6 @@ export function Accounts({accounts, handleAccount, flag}){
         
     }, [accounts])
 
-    useEffect(()=>{
-        console.log(arrayAccounts)
-    }, [arrayAccounts])
 
     useEffect(()=>{
         const token = localStorage.getItem('token');
@@ -30,8 +27,6 @@ export function Accounts({accounts, handleAccount, flag}){
         } else {
             id = selectedAccount;
         }
-
-        console.log('EL ID', id)
 
         const fetchData = async () =>{
             const response = await fetch(`https://gestor-gastos-backend.onrender.com/api/accounts/${id}`, {
@@ -76,7 +71,7 @@ export function Accounts({accounts, handleAccount, flag}){
             setTotalIncomes(totalAmountIncomes)
             setTotalOutgoingTransfers(totalAmountOutTransfers);
             setTotalIncomingTransfers(totalAmountInTransfers);
-            console.log(arrayAccounts)
+          
         }
 
         fetchData();
@@ -99,7 +94,7 @@ export function Accounts({accounts, handleAccount, flag}){
     }, [selectedAccount, arrayAccounts, flag, totalSpents, totalIncomes, totalOutgoingTransfers, totalIncomingTransfers]);
     
 
-    useEffect(()=>{console.log(totalSpents, "TOTAL DE GASTOS", totalIncomes, "TOTAL INCOMES", totalIncomingTransfers,"total INCOMING" , totalOutgoingTransfers, "total OUTGOING")}, [totalSpents, totalIncomes, totalOutgoingTransfers, totalIncomingTransfers])
+    // useEffect(()=>{console.log(totalSpents, "TOTAL DE GASTOS", totalIncomes, "TOTAL INCOMES", totalIncomingTransfers,"total INCOMING" , totalOutgoingTransfers, "total OUTGOING")}, [totalSpents, totalIncomes, totalOutgoingTransfers, totalIncomingTransfers])
 
     return <>
         <section className='h-1/2 bg-black grid grid-cols-3 mt-4 '>

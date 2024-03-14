@@ -58,18 +58,12 @@ export function Register(){
             });
       
             if (response.ok) {
-                setTimeout(()=>{
-                    console.log('Registro exitoso')
-                    showSwalSuccess()
-                }, 2000)
+                showSwalSuccess()
 
               
             } else {
-                setTimeout(()=>{
-                    console.error('Error al registrarse');
-                    showSwalError();
-                    throw new Error();
-                }, 2000)
+                showSwalError();
+                throw new Error();
             }
           } catch (error) {
             console.error('Error:', error);
@@ -80,7 +74,7 @@ export function Register(){
     return (
         <>
             <div className='bg-black w-screen h-screen flex justify-center items-center'>
-                <div className="bg-[#EAF2EF] w-4/5 h-3/5 md:w-2/6 md:h-2/5 flex flex-col rounded-lg">
+                <div className="bg-[#EAF2EF] w-4/5 h-3/5 sm:w-2/6 sm:h-4/5 xl:h-3/5 flex flex-col rounded-lg">
                     <div className='mt-4 h-1/5 flex flex-col items-center justify-around rounded-t-lg'>
                         <h2 className='text-center font-bold w-full text-[1.5rem]'>Gestor de Gastos</h2>
                         <h3 className='text-center font-semibold w-full text-[1rem]'>Sign in</h3>

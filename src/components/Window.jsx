@@ -37,14 +37,12 @@ export function Window(){
     const { selectedAccount, setSelectedAccount } = useContext(SelectedAccountContext);
     const [deleted, setDeleted] = useState(false);
 
+
     useEffect(()=>{
       const getUserInfo = async ()=>{
         const token = localStorage.getItem('token');
-        console.log(token);
         const payload = decodeToken(token);
         const userId = payload._id;
-        console.log(payload)
-        console.log(userId)
 
         const response = await fetch(`https://gestor-gastos-backend.onrender.com/api/users/${userId}`, {
           method: 'GET',
@@ -237,8 +235,8 @@ export function Window(){
               </div>
             </article>
 
-            <article  className={choice == 'Incomes' ? ' bg-[#188C7C] w-1/3 flex justify-around h-full   hover:cursor-pointer' : ' bg-[#136F63] w-1/3 flex justify-around h-full hover:cursor-pointer border-r-1  ' }>
-              <div onClick={handleIncomesButton} className='text-[1.2rem] md:text-[1.5rem] text-white text-center flex items-center'>
+            <article  onClick={handleIncomesButton} className={choice == 'Incomes' ? ' bg-[#188C7C] w-1/3 flex justify-around h-full   hover:cursor-pointer' : ' bg-[#136F63] w-1/3 flex justify-around h-full hover:cursor-pointer border-r-1  ' }>
+              <div  className='text-[1.2rem] md:text-[1.5rem] text-white text-center flex items-center'>
                 <h2 className="inline-block text-[1rem] md:text-[1.5rem]">Ingresos</h2>
               </div>
             </article>
@@ -249,8 +247,8 @@ export function Window(){
               </div>
             </article>
 
-            <article className={choice == 'Stats' ? ' bg-[#188C7C] w-1/3 rounded-tr-lg flex justify-around h-full  hover:cursor-pointer' : ' bg-[#136F63] w-1/3 flex justify-around hover:cursor-pointer h-full border-r-1 rounded-tr-lg  ' }>
-              <div onClick={handleStatsButton} className='text-[1.2rem] md:text-[1.5rem] text-white text-center flex items-center'>
+            <article onClick={handleStatsButton} className={choice == 'Stats' ? ' bg-[#188C7C] w-1/3 rounded-tr-lg flex justify-around h-full  hover:cursor-pointer' : ' bg-[#136F63] w-1/3 flex justify-around hover:cursor-pointer h-full border-r-1 rounded-tr-lg  ' }>
+              <div  className='text-[1.2rem] md:text-[1.5rem] text-white text-center flex items-center'>
                 <h2 className="inline-block text-[1rem] md:text-[1.5rem]"><i class="fa-solid fa-chart-simple"></i></h2>
               </div>
             </article>

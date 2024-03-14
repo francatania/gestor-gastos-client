@@ -23,7 +23,7 @@ export function IncomesForm(){
     const showSwalSuccess = () => {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
-        title: '¡Ingreso agreado!',
+        title: '¡Ingreso agregado!',
         icon: "success",
         confirmButtonColor: '#F4A615'
       }).then(()=>{

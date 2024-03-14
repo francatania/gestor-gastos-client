@@ -21,8 +21,8 @@ export function Sidebar({user}){
     }, [user])
 
     const handleLogout = ()=>{
-      const token = localStorage.getItem('token');
-      localStorage.removeItem(token);
+      // const token = localStorage.getItem('token');
+      localStorage.removeItem('token');
       navigate('/login');
     }
 
@@ -51,11 +51,14 @@ export function Sidebar({user}){
 
          
           <section className='flex flex-col px-4 fixed left-0 bottom-0' >
-            <div className='flex text-white text-sm cursor-pointer py-3 mb-2 gap-2' > 
+            <div className='flex text-white text-[0.7rem] py-3 gap-2'>
+              <h4>Versión 1.0.0</h4>
+            </div>
+            <div className='flex text-white text-sm py-3 mb-2 gap-2' > 
               <h3>Desarrollado por Franco Catania</h3>
               <div className='flex justify-center items-center gap-2'>
                   <Link to={'https://www.linkedin.com/in/franco-catania-6758691a3/'} target="_blank"><i className="fa-brands fa-linkedin"></i></Link>
-              </div>
+            </div>
 
             </div>
           </section>

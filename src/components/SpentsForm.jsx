@@ -22,7 +22,7 @@ export function SpentsForm(){
     const showSwalSuccess = () => {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
-        title: '¡Gasto agreado!',
+        title: '¡Gasto agregado!',
         icon: "success",
         confirmButtonColor: '#F4A615'
       }).then(()=>{
@@ -40,9 +40,7 @@ export function SpentsForm(){
       })
     };
 
-    useEffect(()=>{
-      console.log("ABER DESDE SPENTFORM", selectedAccount)
-    }, [selectedAccount])
+
 
     useEffect(()=>{
         const fetchData = async () => {
