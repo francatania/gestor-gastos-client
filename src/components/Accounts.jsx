@@ -88,7 +88,7 @@ export function Accounts({accounts, handleAccount, flag}){
         if ((totalIncomes != 0 || totalSpents != 0 || totalIncomingTransfers != 0 || totalOutgoingTransfers != 0)) {
             const calc = totalIncomes - totalSpents + totalIncomingTransfers - totalOutgoingTransfers;
             setTotal(calc);
-            setTimeout(()=>{setIsloading(false);}, 2000)
+            setIsloading(false);
             
         } else if (totalIncomes == 0 && totalSpents == 0 && totalIncomingTransfers == 0 && totalOutgoingTransfers == 0) {
             setTotal(0);
