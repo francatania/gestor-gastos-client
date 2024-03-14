@@ -57,7 +57,7 @@ export function Window(){
 
           
         if (!response.ok) {
-          // navigate('/login');
+          navigate('/login');
           throw new Error('Hubo un error al hacer el fetch');
         }
 
