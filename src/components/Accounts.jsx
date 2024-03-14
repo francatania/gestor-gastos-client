@@ -9,7 +9,7 @@ export function Accounts({accounts, handleAccount, flag}){
     const [totalIncomes, setTotalIncomes] = useState(0)
     const [totalOutgoingTransfers, setTotalOutgoingTransfers] = useState(0);
     const [totalIncomingTransfers, setTotalIncomingTransfers] = useState(0);
-    const [total, setTotal] = useState(0);
+    const [total, setTotal] = useState(null);
     const [isLoading, setIsloading] = useState(true);
 
 
@@ -82,15 +82,22 @@ export function Accounts({accounts, handleAccount, flag}){
         fetchData();
     }, [selectedAccount, arrayAccounts, flag])
 
-    useEffect(()=>{
+    useEffect(() => {
         setIsloading(true);
-        if(totalIncomes != 0 || totalSpents != 0 || totalIncomingTransfers != 0 || totalOutgoingTransfers != 0){
-            const calc = totalIncomes - totalSpents + totalIncomingTransfers - totalOutgoingTransfers
-            setTotal(calc); 
-            setIsloading(false)
+    
+        if ((totalIncomes != 0 || totalSpents != 0 || totalIncomingTransfers != 0 || totalOutgoingTransfers != 0)) {
+            const calc = totalIncomes - totalSpents + totalIncomingTransfers - totalOutgoingTransfers;
+            setTotal(calc);
+            setTimeout(()=>{setIsloading(false);}, 2000)
+            
+        } else if (totalIncomes == 0 && totalSpents == 0 && totalIncomingTransfers == 0 && totalOutgoingTransfers == 0) {
+            setTotal(0);
+            setIsloading(false);
         }
-
-    }, [selectedAccount, arrayAccounts, flag, totalSpents, totalIncomes, totalOutgoingTransfers, totalIncomingTransfers])
+    
+        
+    }, [selectedAccount, arrayAccounts, flag, totalSpents, totalIncomes, totalOutgoingTransfers, totalIncomingTransfers]);
+    
 
     useEffect(()=>{console.log(totalSpents, "TOTAL DE GASTOS", totalIncomes, "TOTAL INCOMES", totalIncomingTransfers,"total INCOMING" , totalOutgoingTransfers, "total OUTGOING")}, [totalSpents, totalIncomes, totalOutgoingTransfers, totalIncomingTransfers])
 
