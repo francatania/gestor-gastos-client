@@ -74,7 +74,11 @@ export function Accounts({accounts, handleAccount, flag}){
           
         }
 
-        fetchData();
+        if(arrayAccounts.length > 0){
+            fetchData();
+        }
+
+        
     }, [selectedAccount, arrayAccounts, flag])
 
     useEffect(() => {

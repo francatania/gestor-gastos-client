@@ -11,7 +11,6 @@ export function Sidebar({user}){
 
     useEffect(()=>{
         if(user && user.user && user.user.first_name){
-            console.log(user)
             const name = user.user.first_name
             const lastName = user.user.last_name;
             setFirstName(name);
