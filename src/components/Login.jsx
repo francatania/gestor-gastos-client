@@ -26,23 +26,19 @@ export function Login() {
             });
 
             if (response.ok) {
-                setTimeout(async ()=>{
-                    const data = await response.json();
-                    const token = data.token;
-                    const payload = decodeToken(token);
-                    const name = payload.first_name + " " + payload.last_name
-                    localStorage.setItem('token', token);
-                    toast.success(`Bienvenido/a, ${name}`)
-                }, 500)
+                const data = await response.json();
+                const token = data.token;
+                const payload = decodeToken(token);
+                const name = payload.first_name + " " + payload.last_name
+                localStorage.setItem('token', token);
+                toast.success(`Bienvenido/a, ${name}`)
+                
                 setLoading(false);
                 navigate('/home');
                 
             } else {
-                setTimeout(()=>{
-                    setLoading(false);
-                    toast.error('Usuario y/o contraseña incorrecto.');
-                }, 1000)
-
+                setLoading(false);
+                toast.error('Usuario y/o contraseña incorrecto.');
             }
         } catch (error) {
             console.error('Error:', error);
