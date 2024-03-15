@@ -31,7 +31,8 @@ export function Login() {
                 const payload = decodeToken(token);
                 const name = payload.first_name + " " + payload.last_name
                 localStorage.setItem('token', token);
-                toast.success(`Bienvenido/a, ${name}`)
+                setTimeout(()=>{toast.success(`Bienvenido/a, ${name}`)}, 300)
+                
                 
                 setLoading(false);
                 navigate('/home');
