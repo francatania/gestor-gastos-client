@@ -230,26 +230,26 @@ export function Window(){
           <section className='h-1/2  rounded-t-lg text-center flex justify-center items-center'>
 
             <article onClick={handleSpentsButton} className={choice == 'Spents' ? ' bg-[#188C7C] w-1/3 flex justify-around rounded-tl-lg h-full   hover:cursor-pointer' : ' bg-[#136F63] hover:cursor-pointer rounded-tl-lg w-1/3 flex justify-around h-full border-r-1 ' } >
-              <div className='text-[1.2rem] md:text-[1.5rem] text-center text-white flex items-center'>
-                <h2 className="inline-block text-[1rem] md:text-[1.5rem]">Gastos</h2>
+              <div className=' text-center text-white flex items-center'>
+                <h2 className="inline-block text-[1rem] md:text-[1.2rem]">Gastos</h2>
               </div>
             </article>
 
             <article  onClick={handleIncomesButton} className={choice == 'Incomes' ? ' bg-[#188C7C] w-1/3 flex justify-around h-full   hover:cursor-pointer' : ' bg-[#136F63] w-1/3 flex justify-around h-full hover:cursor-pointer border-r-1  ' }>
-              <div  className='text-[1.2rem] md:text-[1.5rem] text-white text-center flex items-center'>
-                <h2 className="inline-block text-[1rem] md:text-[1.5rem]">Ingresos</h2>
+              <div  className=' text-white text-center flex items-center'>
+                <h2 className="inline-block text-[1rem] md:text-[1.2rem]">Ingresos</h2>
               </div>
             </article>
 
             <article onClick={handleTransfersButton} className={choice == 'Transfers' ? ' bg-[#188C7C] w-1/3 flex justify-around  h-full   hover:cursor-pointer' : ' bg-[#136F63] hover:cursor-pointer w-1/3 flex justify-around h-full border-r-1  ' } >
-              <div className='text-[1.2rem] md:text-[1.5rem] text-center text-white flex items-center'>
-                <h2 className="inline-block text-[1rem] md:text-[1.5rem]"><i class="fa-solid fa-right-left"></i></h2>
+              <div className=' text-center text-white flex items-center'>
+                <h2 className="inline-block text-[1rem] md:text-[1.2rem]"><i class="fa-solid fa-right-left"></i></h2>
               </div>
             </article>
 
             <article onClick={handleStatsButton} className={choice == 'Stats' ? ' bg-[#188C7C] w-1/3 rounded-tr-lg flex justify-around h-full  hover:cursor-pointer' : ' bg-[#136F63] w-1/3 flex justify-around hover:cursor-pointer h-full border-r-1 rounded-tr-lg  ' }>
-              <div  className='text-[1.2rem] md:text-[1.5rem] text-white text-center flex items-center'>
-                <h2 className="inline-block text-[1rem] md:text-[1.5rem]"><i class="fa-solid fa-chart-simple"></i></h2>
+              <div  className=' text-white text-center flex items-center'>
+                <h2 className="inline-block text-[1rem] md:text-[1.2rem]"><i class="fa-solid fa-chart-simple"></i></h2>
               </div>
             </article>
 

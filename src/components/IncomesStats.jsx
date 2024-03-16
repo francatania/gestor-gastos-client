@@ -96,7 +96,7 @@ export function IncomesStats({data, dataBarGraphic, textCenter, graphChoice, isM
                             plugins: {
                                 title: {
                                     display: true,
-                                    text: 'Ingresos por Año'
+                                    text: 'Ingresos por Mes'
                                 }
                             }  
                         }}

@@ -96,7 +96,7 @@ export function SpentsStats({data, dataBarGraphic, textCenter, graphChoice, isMo
                             plugins: {
                                 title: {
                                     display: true,
-                                    text: 'Gastos por Año'
+                                    text: 'Gastos por Mes'
                                 }
                             }  
                         }}
