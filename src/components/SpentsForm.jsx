@@ -18,8 +18,7 @@ export function SpentsForm(){
     const [loading, setLoading] = useState(false);
     const { selectedAccount } = useContext(SelectedAccountContext);
     const [userId, setUserId] = useState('');
-    const urlGet = `https://gestor-gastos-backend.onrender.com/api/spents-categories/${userId}`;
-    const urlGetLocalHost = `http://localhost:8080/api/spents-categories/${userId}`
+
 
 
     useEffect(()=>{
@@ -27,6 +26,12 @@ export function SpentsForm(){
       const payload = decodeToken(token);
       setUserId(payload._id);
     }, [])
+
+        const urlGet = `https://gestor-gastos-backend.onrender.com/api/spents-categories/`;
+        const urlGetLocalHost = `http://localhost:8080/api/spents-categories/${userId}`
+
+        console.log(userId)
+        console.log(urlGet)
 
     useEffect(()=>{
       const token = localStorage.getItem('token');
@@ -63,30 +68,35 @@ export function SpentsForm(){
 
 
     useEffect(()=>{
+      if(userId){
         const fetchData = async () => {
-            try {
-              
-              const response = await fetch(urlGet, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                },
-              });
-        
-              if (!response.ok) {
-                throw new Error('Hubo un error al hacer el fetch');
-              }
-        
-              const result = await response.json();
-        
-              setCategories(result.categories);
-            } catch (error) {
-              console.error('Error al obtener los datos', error);
+          try {
+            
+            const response = await fetch(urlGet + userId, {
+              method: 'GET',
+              credentials: 'include',
+              headers: {
+              },
+            });
+      
+            if (!response.ok) {
+              throw new Error('Hubo un error al hacer el fetch');
             }
-          };
-        
-          fetchData();
-    }, [])
+      
+            const result = await response.json();
+
+            console.log(result)
+      
+            setCategories(result.categories);
+          } catch (error) {
+            console.error('Error al obtener los datos', error);
+          }
+        };
+      
+        fetchData();
+      }
+
+    }, [userId])
 
     const handleSubmit = async (event)=>{
       event.preventDefault();
