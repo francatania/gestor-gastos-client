@@ -9,6 +9,7 @@ import { IncomesForm } from './components/IncomesForm.jsx'
 import {TransfersForm} from './components/TransfersForm.jsx'
 import { AccountsList } from './components/AccountsList.jsx';
 import { AccountsForm } from './components/AccountsForm.jsx';
+import { CategoriesForm } from './components/CategoriesForm.jsx';
 
 export const SelectedAccountContext = createContext();
 
@@ -40,6 +41,7 @@ export function App() {
               <Route path='/transfers-form' element={<TransfersForm/>}></Route>
               <Route path='/accounts' element={<AccountsList/>}></Route>
               <Route path='/accounts-form' element={<AccountsForm/>}></Route>
+              <Route path= '/spents-category-form' element={<CategoriesForm/>}></Route>
 
             </Routes>
           </BrowserRouter>

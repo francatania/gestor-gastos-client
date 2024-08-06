@@ -17,7 +17,27 @@ export function SpentsForm(){
     const [category, setCategory] = useState('');
     const [loading, setLoading] = useState(false);
     const { selectedAccount } = useContext(SelectedAccountContext);
+    const [userId, setUserId] = useState('');
+    const urlGet = `https://gestor-gastos-backend.onrender.com/api/spents-categories/${userId}`;
+    const urlGetLocalHost = `http://localhost:8080/api/spents-categories/${userId}`
 
+
+    useEffect(()=>{
+      const token = localStorage.getItem('token');
+      const payload = decodeToken(token);
+      setUserId(payload._id);
+    }, [])
+
+    useEffect(()=>{
+      const token = localStorage.getItem('token');
+      const payload = decodeToken(token);
+      if(selectedAccount == ''){
+        setAccount(payload.accounts[0]);
+      }else{
+        setAccount(selectedAccount);
+      }
+      
+    }, [selectedAccount])
 
     const showSwalSuccess = () => {
       const MySwal = withReactContent(Swal);
@@ -45,8 +65,8 @@ export function SpentsForm(){
     useEffect(()=>{
         const fetchData = async () => {
             try {
-
-              const response = await fetch(`https://gestor-gastos-backend.onrender.com/api/spents-categories`, {
+              
+              const response = await fetch(urlGet, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -110,16 +130,7 @@ export function SpentsForm(){
       }
     }
 
-    useEffect(()=>{
-      const token = localStorage.getItem('token');
-      const payload = decodeToken(token);
-      if(selectedAccount == ''){
-        setAccount(payload.accounts[0]);
-      }else{
-        setAccount(selectedAccount);
-      }
-      
-    }, [selectedAccount])
+
 
 
 
@@ -157,8 +168,16 @@ export function SpentsForm(){
                 </div>
 
                 <div className='flex flex-col p-2 md:p-5 justify-around h-1/6 w-full '>
-                        <label htmlFor="">Categoría</label>
-                        <div className=' shadow-sm' >
+                        <div className = 'flex flex-row'>
+                          <label htmlFor="" className='flex flex-col justify-around'>Categoría</label>
+                          <Link to={'/spents-category-form'} className='pl-4 flex items-center justify-center'>
+                            <button class="bg-[#F4A615] text-white py-1 px-2 font-bold rounded flex hover:bg-[#dba033] duration-75 w-6 justify-center">
+                              <i class="fa-solid fa-plus m-auto"></i>
+                                
+                            </button>
+                          </Link>
+                        </div>
+                        <div className='mt-1 shadow-sm' >
                             <select className='w-full rounded-sm p-1 shadow-sm bg-[#f5f8f7]' value={category} onChange={(e) => setCategory(e.target.value)}  name="" id="" >
                                 <option value="" disabled>Categorias</option>
                                 {categories.map((category, index) => (

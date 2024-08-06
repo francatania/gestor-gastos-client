@@ -27,10 +27,12 @@ export function Window(){
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     }
+
     const today = new Date();
     const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const todayDate = formatDate(todayDateOnly)
-    const [selectedFromDate, setSelectedFromDate] = useState('2024-01-01');
+    const defaultFromDate = formatDate(new Date(today.getFullYear(), today.getMonth(), 1))
+    const [selectedFromDate, setSelectedFromDate] = useState(defaultFromDate);
     const [selectedToDate, setSelectedToDate] = useState(todayDate);
     const [accounts, setAccounts] = useState([]);
     const [userInfo, setUserInfo] = useState({});
