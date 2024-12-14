@@ -85,9 +85,13 @@ export function SpentsForm(){
       
             const result = await response.json();
 
-            console.log(result)
-      
-            setCategories(result.categories);
+            console.log(result.categories)
+            
+            const sortedCategories = result.categories.sort((a, b) => 
+              a.category.localeCompare(b.category)
+            );
+    
+            setCategories(sortedCategories);
           } catch (error) {
             console.error('Error al obtener los datos', error);
           }

@@ -57,8 +57,10 @@ export function IncomesForm(){
               }
         
               const result = await response.json();
-        
-              setCategories(result.categories);
+              const sortedCategories = result.categories.sort((a, b) => 
+                a.category.localeCompare(b.category)
+              );
+              setCategories(sortedCategories);
             } catch (error) {
               console.error('Error al obtener los datos', error);
             }
