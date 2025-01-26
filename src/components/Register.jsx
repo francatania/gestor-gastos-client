@@ -4,7 +4,8 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { ThreeDots } from 'react-loader-spinner'
 import { Link } from 'react-router-dom';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Register(){
     const navigate = useNavigate();
@@ -47,8 +48,15 @@ export function Register(){
             email,
             password
         }
+        let timeoutRegisterId = setTimeout(()=>{
+                toast.info('Estamos procesando la solicitud, esto puede durar 1 minuto. Aguarde por favor.', {autoClose:10000});
+                
+            }, 5000) 
+
+            
 
         try {
+
             const response = await fetch('https://gestor-gastos-backend.onrender.com/api/users', {
               method: 'POST',
               headers: {
@@ -56,6 +64,9 @@ export function Register(){
               },
               body: JSON.stringify(formData),
             });
+
+            clearTimeout(timeoutRegisterId);
+            
       
             if (response.ok) {
                 showSwalSuccess()
@@ -67,6 +78,12 @@ export function Register(){
             }
           } catch (error) {
             console.error('Error:', error);
+            clearTimeout(timeoutRegisterId);
+            setLoading(false);
+          }finally{
+            clearTimeout(timeoutRegisterId);
+            setLoading(false);
+
           }
         
     }
@@ -125,6 +142,17 @@ export function Register(){
 
                     </div>
                 </section>
+                <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={true}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme='dark'
+            />
             </div>
         </>
     )

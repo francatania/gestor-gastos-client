@@ -15,8 +15,14 @@ export function Login() {
 
     const handleLogin = async () => {
         setLoading(true);
+
+        let timeoutId = setTimeout(()=>{
+            toast.info('Estamos procesando la solicitud, esto puede durar 1 minuto. Aguarde por favor.', {autoClose:10000});
+        }, 5000) 
+
         try {
             const formData = { email, password };
+
             const response = await fetch('https://gestor-gastos-backend.onrender.com/api/auth/login', {
                 method: 'POST',
                 headers: {
@@ -24,6 +30,8 @@ export function Login() {
                 },
                 body: JSON.stringify(formData),
             });
+
+            clearTimeout(timeoutId); 
 
             if (response.ok) {
                 const data = await response.json();
@@ -44,7 +52,11 @@ export function Login() {
         } catch (error) {
             console.error('Error:', error);
             setLoading(false);
+            clearTimeout(timeoutId);
             toast.error('Ocurrió un error al iniciar sesión.');
+        }finally{
+            clearTimeout(timeoutId); 
+            setLoading(false);
         }
     };
 
